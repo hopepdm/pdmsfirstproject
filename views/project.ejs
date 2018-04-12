@@ -1,0 +1,132 @@
+<!-- 新建项目框 -->
+<div class="up_load change_modal">
+    <p>
+        <i class="fa fa-folder-open" aria-hidden="true"></i>
+    </p>
+    <p>
+        <span class="up_load_title">点击新建项目</span>
+    </p>
+</div>
+<!-- 新建项目提示弹窗 -->
+<div class="modal new_project">
+    <div class="modal_outer">
+        <div class="close"></div>
+        <form class="modal_content" action="/re/personal/<%= user[0]._id %>/project" method="post" autocomplete="off">
+            <div class="modal_title">
+                <span class="pre_text">项目名称：</span>
+                <input type="text" name="proName" autofocus="autofocus" placeholder="必填：不能超过50字符">
+            </div>
+            <div class="modal_intro">
+                <div>
+                    <span class="pre_text">项目介绍：</span>
+                </div>
+                <textarea name="proDescription" maxlength="500" rows="6" placeholder="必填：请对项目进行简单描述，方便管理……"></textarea>
+            </div>
+            <div class="confirm">
+                <input type="submit" name="button" value="确认提交">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 项目模块 -->
+<div class="up_load_item">
+    <% content.forEach(function(val){ %>
+        <div class="item">
+            <div class="item_close">
+                <a href="javascript:;" class="delete_item" data-id="<%= val._id %>" data-name="<%= val.proName %>">删除</a>
+            </div>
+            <div class="item_top" title="<%= '项目介绍:' + val.proDescription %>">
+                <h2 class="item_title">
+                    <%= val.proName + "-" %>
+                        <span>
+                            <%= val.culturalCount + "件文物" %>
+                        </span>
+                </h2>
+                <span class="item_content">创建时间：</span>
+                <time class="item_time">
+                    <%= val.proDate %>
+                </time>
+            </div>
+            <ul class="item_bottom clearfix">
+                <li>
+                    <span calss="item_status">已上传：</span>
+                    <span class="item_loaded">
+                        <%= val.culturalCount %>
+                    </span>
+                </li>
+                <li>
+                    <span class="item_status">已发布：</span>
+                    <span class="item_publish">
+                        <%= val.publishedCount %>
+                    </span>
+                </li>
+            </ul>
+            <span>
+                <a href="<%= '/upload/' + val._id %>">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span class="item_new">添加新文物</span>
+                </a>
+            </span>
+
+        </div>
+        <% }) %>
+</div>
+
+<!-- 删除项目弹窗 -->
+<div class="modal delete_project">
+    <div class="modal_outer">
+        <div class="close"></div>
+        <div class="modal_content">
+            <div class="confirm_icon">
+                <i class="fa fa-meh-o" aria-hidden="true"></i>
+            </div>
+            <h2 class="confirm_text">你要抛弃我吗？</h2>
+            <p class="confirm_name"></p>
+            <div class="confirm_button">
+                <button class="cancel btn">取消</button>
+                <button class="abort btn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分页 -->
+<% var n = 1; %>
+    <% if (content.length == 0) { %>
+        <div class="no_data">
+            <img src="/image/no_data.jpg">
+        </div>
+        <% } else { %>
+            <div class="page">
+                <% if (isFirstpage) { %>
+                    <a href="?page=1" class="disable_page">首页</a>
+                    <a href="<%= " ?page=" + (page-1) %>" class="disable_page">上一页</a>
+                    <% } else { %>
+                        <a href="?page=1">首页</a>
+                        <a href="<%= " ?page=" + (page-1) %>" class="disable_page">上一页</a>
+                        <% } %>
+                            <% while ( n <= pages ) { %>
+                                <% if ( n == page ) { %>
+                                    <a href="<%= " ?page=" + n %>" class="page_tag active">
+                                        <%= n++ %>
+                                    </a>
+                                    <% } else { %>
+                                        <a href="<%= " ?page=" + n %>" class="page_tag">
+                                            <%= n++ %>
+                                        </a>
+                                        <% } %>
+                                            <% } %>
+                                                <% if (isLastage) { %>
+                                                    <a href="<%= " ?page=" + n %>" class="disable_page">下一页</a>
+                                                    <a href="<%= " ?page=" + pages %>" class="disable_page">尾页</a>
+                                                    <% } else { %>
+                                                        <a href="<%= " ?page=" + (page+1) %>">下一页</a>
+                                                        <a href="<%= " ?page=" + pages %>">尾页</a>
+                                                        <% } %>
+            </div>
+            <% } %>
+
+
+                <script type="text/javascript" src="/script/jquery-3.1.1.min.js"></script>
+                <script type="text/javascript" src="/script/main.js"></script>

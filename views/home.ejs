@@ -1,0 +1,28 @@
+<!-- 首页 -->
+<%- include('header') %>
+
+
+<% if (datas.length > 0) { %>
+    
+    <% datas.forEach(function(val){ %>
+        <div class='wrap' style='width: 100%; margin:0 auto;'>
+            <div class='homepage' style='position:relative;width:600px;height:auto!important; min-height:130px;margin: 20px auto;border-radius: 0.6rem;
+            box-shadow: 0 4px 8px 0 rgba(7,17,27,.1);;'>
+                <div class='leftwrap' style='position: relative;float: left; left: 100px;'>
+                    <a href="<%= '/pub/' + val._id %>" target='_blank'><img src="<%= '/culimage/' + val._id + '.png' %>" style='width: 200px;' onerror="this.src='/culimage/default.jpg';this.onerror=null"></a>
+                </div>
+                <div class='rightwrap' style='position: relative;float: left;padding: 0 0 0 20px; left: 100px;width:250px'>
+                    <p style='text-overflow:ellipsis;overflow:hidden;'>所属项目：<%= val.proName %></p>
+                    <p style='text-overflow:ellipsis;overflow:hidden;'>用户名称：<%= val.userName %></p>
+                    <p style='text-overflow:ellipsis;overflow:hidden;'>项目描述：<%= val.proDescription %></p>
+                </div>
+                <div class="clearfloat" style='clear:both;height:0;font-size: 1px;line-height: 0px;'></div>
+            </div>
+        </div>
+    <% }) %>
+<% } else { %>
+    <div class="no_data">
+        <img src="/image/no_data.jpg">
+    </div>
+<% } %>
+<%- include('footer') %>

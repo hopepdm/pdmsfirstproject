@@ -1,0 +1,225 @@
+<!-- 拖拽上传 -->
+<div class="up_load drag_load">
+    <p>
+        <i class="fa fa-upload" aria-hidden="true"></i>
+    </p>
+    <p class="info">
+        <span class="up_load_title">请将文物zip压缩包拖</br>入此区域并点击上传</span>
+    </p>
+</div>
+
+<!-- 上传按钮 -->
+<div class="publish_item">
+    <a href="javascript:;" class="publish">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        上传
+    </a>
+</div>
+
+<!-- 进度条 -->
+<div class="progress">
+    <div class="progress_bg">
+        <div class="progress_bar">
+            <span></span>
+        </div>
+    </div>
+    <div class="progress_num">
+        <div class="division clearfix">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="divnum">
+            <ul>
+                <li class="z-ov">Go</li>
+                <li class="z-ov">10%</li>
+                <li class="z-ov">20%</li>
+                <li class="z-ov">30%</li>
+                <li class="z-ov">40%</li>
+                <li class="z-ov">50%</li>
+                <li class="z-ov">60%</li>
+                <li class="z-ov">70%</li>
+                <li class="z-ov">80%</li>
+                <li class="z-ov">90%</li>
+                <li class="">100%</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 文物列表 -->
+<div class="file_list">
+    <table class="list_content">
+        <thead>
+            <tr>
+                <th style='min-width: 7rem;'>
+                    <label class="select select_all">
+                        <input type="checkbox" class="hidden-input select-all">
+                        <span class="mime"></span>
+                        <span class="chose">全选</span>
+                    </label>
+                </th>
+                <th style='min-width: 8rem;'>文物名称</th>
+                <th style='min-width: 6rem;'>发布状态</th>
+                <th style='min-width: 9rem;'>文件名</th>
+                <th style='min-width: 9rem;'>页面title</th>
+                <th style='min-width: 18rem;'>文件操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <% if (data) { %>
+            <% data.forEach(function(val){ %>
+                <tr>
+                    
+                    <% if (val.isPublish) { %>
+                        <td>
+                            <label class="select select_more">
+                                <input type="checkbox" class="hidden-input" data-file='<%= val.pageName + ".html" %>' data-value='true'>
+                                <span class="mime"></span>
+                            </label>
+                        </td>
+                        <td><%= val.fileName %></td>
+
+                        <td class="up_status_loaded">已发布</td>
+                        <td><%= val.pageName + ".html" %></td>
+                        <td><%= val.pageTitle %></td>
+                        <td>
+                            <a href="javascript:;" class="file_edit file" data-id="<%= val._id %>" data-title="<%= val.pageTitle %>" data-name="<%= val.pageName %>">修改</a>
+                            <a href="<%= "/editor/" + val._id %>" class="file_change file" target='_blank'>编辑</a>
+                            <a href="javascript:;" class="file_delete file" data-id="<%= val._id %>" data-name="<%= val.fileName %>" data-status="<%= val.isPublish %>" data-filename="<%= val.pageName %>">删除</a>
+                        </td>
+                    <% } else { %>
+                        <td>
+                            <label class="select select_more">
+                                <input type="checkbox" class="hidden-input" data-file='<%= val.pageName + ".html" %>' data-value='false'>
+                                <span class="mime"></span>
+                            </label>
+                        </td>
+                        <td><%= val.fileName %></td>
+                        <td class="up_status_unload">未发布</td>
+                        <td><%= val.pageName + ".html" %></td>
+                        <td><%= val.pageTitle %></td>
+                        <td>
+                            <a href="javascript:;" class="file_publish file" data-id="<%= val._id %>" data-name="<%= val.fileName %>">发布</a>
+                            <a href="javascript:;" class="file_edit file" data-id="<%= val._id %>" data-title="<%= val.pageTitle %>" data-name="<%= val.pageName %>">修改</a>
+                            <a href="<%= "/editor/" + val._id %>" class="file_change file" target='_blank'>编辑</a>
+                            <a href="javascript:;" class="file_delete file" data-id="<%= val._id %>" data-name="<%= val.fileName %>" data-status="<%= val.isPublish %>" data-filename="<%= val.pageName %>">删除</a>
+                        </td>
+                    <% } %>
+                </tr>
+            <% }) %>
+        <% } %>
+
+    </table>
+
+</div>
+
+<!-- 编辑弹窗 -->
+<div class="modal edit_modal">
+    <div class="modal_outer">
+        <div class="close"></div>
+        <form class="modal_content" autocomplete="off">
+            <div class="modal_title change">
+                <span class="pre_text">页面标题：</span>
+                <input type="text" name="pageTitle" autofocus="autofocus" placeholder="title">
+                <span class="pre_text title">50字符以内</span>
+            </div>
+            <div class="modal_title change">
+                <span class="pre_text">文件名称：</span>
+                <input type="text" name="pageName" placeholder="文件名">
+                <span class="pre_text name">仅文件前缀</span>
+            </div>
+            <div class="confirm">
+                <input type="submit" name="button" value="确认提交">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 删除弹窗 -->
+<div class="modal file_confirm">
+    <div class="modal_outer">
+        <div class="close"></div>
+        <div class="modal_content">
+            <div class="confirm_icon">
+                <i class="fa fa-meh-o" aria-hidden="true"></i>
+            </div>
+            <h2 class="confirm_text">你要抛弃我吗？</h2>
+            <p class="confirm_name"></p>
+            <div class="confirm_button">
+                <button class="cancel btn">取消</button>
+                <button class="abort btn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 发布弹窗 -->
+<div class="modal publish_cultural">
+    <div class="modal_outer">
+        <div class="close"></div>
+        <div class="modal_content">
+            <div class="confirm_icon">
+                <i class="fa" aria-hidden="true"></i>
+            </div>
+            <h2 class="confirm_text">你确定要发布吗？</h2>
+            <p class="confirm_name"></p>
+            <div class="confirm_button">
+                <button class="cancel btn">取消</button>
+                <button class="abort btn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分页 -->
+<% var n = 1; %>
+<% if ( !pageSys || pageSys.count == 0 ) { %>
+    <div class="no_data">
+        <img src="/image/no_data.jpg">
+    </div>
+<% } else { %>
+    <div class="page">
+        <% if ( pageSys.isFirstpage ) { %>
+            <a href="?page=1" class="disable_page">首页</a>
+            <a href="<%= "?page=" + (pageSys.page-1) %>" class="disable_page">上一页</a>
+        <% } else { %>
+            <a href="?page=1">首页</a>
+            <a href="<%= "?page=" + (pageSys.page-1) %>" >上一页</a>
+        <% } %>
+        <% while ( n <= pageSys.pages ) { %>
+            <% if ( n == pageSys.page ) { %>
+                <a href="<%= "?page=" + n %>" class="page_tag active"><%= n++ %></a>
+            <% } else { %>
+                <a href="<%= "?page=" + n %>" class="page_tag"><%= n++ %></a>
+            <% } %>
+        <% } %>
+        <% if (pageSys.isLastage) { %>
+            <a href="<%= "?page=" + n %>" class="disable_page">下一页</a>
+            <a href="<%= "?page=" + pageSys.pages %>" class="disable_page">尾页</a>
+        <% } else { %>
+            <a href="<%= "?page=" + (pageSys.page+1) %>">下一页</a>
+            <a href="<%= "?page=" + pageSys.pages %>">尾页</a>
+        <% } %>
+    </div>
+<% } %>
+
+<!-- 下载 -->
+<!-- <% if ( pageSys && pageSys.count != 0 ) { %>
+<div class='downLoad'>
+    <a href="/download" class='downStyle' title='下载已发布文物'>下载</a>
+</div>
+<% } %> -->
+
+<script type="text/javascript" src="/script/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/script/main.js"></script>

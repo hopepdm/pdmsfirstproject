@@ -1,0 +1,23 @@
+<!-- 登录登出component -->
+<div class="nav">
+  <% if (user) { %>
+    <a class="nav-item" href="/personal/<%= user[0]._id %>">
+      <h2>欢迎你：
+        <%= user[0].name %>
+      </h2>
+    </a>
+    <span>|</span>
+    <!-- <div class="divider"></div> -->
+    <a class="nav-item" href="/signout">
+      <h2>登出</h2>
+    </a>
+    <% } else { %>
+      <a class="nav-item" href="/signin" target="_self">
+        <h2>登录</h2>
+      </a>
+      <span>|</span>
+      <a class="nav-item" href="/register" target="_self">
+        <h2>注册</h2>
+      </a>
+      <% } %>
+</div>

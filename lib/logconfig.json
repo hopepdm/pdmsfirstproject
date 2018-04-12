@@ -1,0 +1,30 @@
+{
+    "appenders": [{
+        "type": "console",
+        "level":"INFO"
+    }, {
+        "type": "dateFile",
+        "filename": "log/",
+        "pattern": "yyyy-MM-dd.log",
+        "level":"INFO",
+        "alwaysIncludePattern": true,
+        "maxLogSize": 1024,
+        "backups": 4,
+        "category": "http"
+    }, {
+        "type": "file",
+        "filename": "log/running.log",
+        "maxLogSize": 1024,
+        "backups": 4,
+        "level":"INFO",
+        "category": "runninglog"
+    },{
+        "type": "file",
+        "filename": "log/debug.log",
+        "maxLogSize": 1024,
+        "backups": 4,
+        "level":"DEBUG",
+        "category": "debuglog"
+    }],
+    "replaceConsole": true
+}

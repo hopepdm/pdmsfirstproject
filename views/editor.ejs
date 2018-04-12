@@ -1,0 +1,64 @@
+<!-- 修改界面 -->
+<%- include('header') %>
+<div class='viewer'></div>
+<!-- 发布确认窗口 -->
+<div class='modal publish_confirm'>
+    <div class='modal_outer'>
+        <div class='close'></div>
+        <div class='modal_content'>
+            <div class='confirm_icon'>
+                <!-- <i class='fa fa-spinner fa-pulse fa-fw'></i> -->
+            </div>
+            <h2 class='confirm_text'>确认要发布吗？</h2>
+            <p class='confirm_name' data-id="<%= publish._id %>"><%= '文件:' + publish.pageName %></p>
+            <div class='confirm_button'>
+                <button class='cancel btn'>取消</button>
+                <button class='abort btn'>发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript' src='/script/jquery-3.1.1.min.js'></script>
+<script type='text/javascript' src='/webgl/three.min.js'></script>
+<script type='text/javascript' src='/webgl/Detector.js'></script>
+<script type='text/javascript' src='/webgl/BinaryLoader.js'></script>
+<script type='text/javascript' src='/webgl/OBJLoader.js'></script>
+<script type='text/javascript' src='/webgl/MTLLoader.js'></script>
+<script type='text/javascript' src='/webgl/OrbitControls.js'></script>
+<script type='text/javascript' src='/webgl/gui.js'></script>
+<script type='text/javascript' src='/script/reEditor.js'></script>
+
+<script>
+    if ( !Detector.webgl ) {
+        Detector.addGetWebGLMessage();
+    }
+    var uid = '<%= publish._id %>';
+    var parObj = {
+        objurl:'<%= '/' + publish.projectId + '/' + publish.filePath %>',
+        fileName: '<%= publish.pageName %>',
+        near: 0.001,
+        far: 10000,
+        minfov: 0.5,
+        maxfov: 8,
+        moveSpeed: 0.5,
+        rotateSpeed: <%= publish.rotateSpeed %>,
+        zoomSpeed: <%= publish.zoomSpeed %>,
+        modelPosition: <%= publish.culturalInfo.position %>,
+        modelRotation: <%= publish.culturalInfo.rotation %>,
+        lightSet: {
+            intensity: <%= publish.intensity %>, 
+            color: <%= publish.lightColor %>
+        },
+        ambient: true,
+        wireframeState: <%= publish.wireframeState %>,
+        opacity: <%= publish.opacity %>,
+        shininess: <%= publish.shininess %>,
+        diffuseColor: <%= publish.diffuseColor %>,
+        specularColor: <%= publish.specularColor %>,
+        background: '<%= publish.background %>'
+    };
+                
+    window.initScene(parObj);
+</script>
+<%- include('footer') %>

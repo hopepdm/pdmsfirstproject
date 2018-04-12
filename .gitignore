@@ -1,0 +1,4 @@
+.vscode/
+.temp/
+.dist/
+node_modules/
